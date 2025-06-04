@@ -8,57 +8,44 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
+        // SwiftUI has a dedicated Image type for handling pictures in your apps, and there are three main ways you will create them:
         
-        // The simplest way to make a button is when it just contains some text you pass in the title of the button, along with a closure that should be run when the button is tapped:
-        //        Button("Delete selection") {
-        //            print("Now deleting")
-        //        }
-        // That could be any function rather than just a closure so this kind of thing is fine:
+       // Image("pencil") will load an image called “Pencil” that you have added to your project.
+       // Image(decorative: "pencil") will load the same image, but won’t read it out for users who have enabled the screen reader. This is useful for images that don’t convey additional important information.
+        //Image(systemName: "pencil") will load the pencil icon that is built into iOS. This uses Apple’s SF Symbols icon collection, and you can search for icons you like – download Apple’s free SF Symbols app from the web to see the full set.
         
-        //        Button("Delete selection", action: executeDelete)
-        //       }
+        // By default the screen reader will read your image name if it is enabled, so make sure you give your images clear names if you want to avoid confusing the user. Or, if they don’t actually add information that isn’t already elsewhere on the screen, use the Image(decorative:) initializer.
         
-        // There are a few different ways we can customize the way buttons look. We can attach a rold to the button which ios can use to adjust its appearance both visually and for screen readers. For example we could say that our Delete button has a destructive role like this:
-        //
-        //        Button("Delete selection", role: .destructive, action: executeDelete)
-        //    }
-        // Second, we can use of the built-in styles for buttons: .bordered and .borderedProminent.
-        // These can be used by themselves or in combination with a role:
-        //        VStack {
-        //            Button("Button 1") { }
-        //                .buttonStyle(.bordered)
-        //            Button("Button 2", role: .destructive) { }
-        //                .buttonStyle(.bordered)
-        //            Button("Button 3") { }
-        //                .buttonStyle(.borderedProminent)
-        //            Button("Button 4", role: .destructive) { }
-        //                .buttonStyle(.borderedProminent)
-        //        }
-        //    }
+        //Because the longer form of buttons can have any kind of views inside them, you can use images like this:
+
+//        Button {
+//            print("Edit button was tapped")
+//        } label: {
+//            Image(systemName: "pencil")
+//        }
         
-        // If you want to customize the colors used for a bordered button, use the tint() modifier like this:
+        //If you want both text and image at the same time, you have two options. The first is provide them both to the Button directly, like this:
         
-        //        Button("Button 3") { }
-        //            .buttonStyle(.borderedProminent)
-        //            .tint(.mint)
-        //    }
+//        Button("Edit", systemImage: "pencil") {
+//            print("Edit button was tapped")
+//        }
         
-        //If you want something completely custom, you can pass a custom label using a second trailing closure:
-        
+        //But if you want something more custom, SwiftUI has a dedicated type called Label.
+
         Button {
-            print("Button was tapped")
+            print("Edit button was tapped")
         } label: {
-            Text("Tap me!")
+            Label("Edit", systemImage: "pencil")
                 .padding()
                 .foregroundStyle(.white)
                 .background(.red)
         }
     }
-        
-    func executeDelete() {
-        print("Now deleting…")
-    }
+    
+    // Both of those will show both a pencil icon and the word “Edit” side by side, which on the surface sounds exactly the same as what we’d get by using a simple HStack. However, SwiftUI is really smart: it will automatically decide whether to show the icon, the text, or both depending on how they are being used in our layout, which makes this option a great choice.
+  
 }
 
 
