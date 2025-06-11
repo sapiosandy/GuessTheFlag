@@ -7,15 +7,32 @@
 
 import SwiftUI
 
+struct TextStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(.blue)
+            .font(.largeTitle.weight(.bold))
+            
+    }
+}
+
+extension View {
+    func titleStyle() -> some View {
+        modifier(TextStyle())
+    }
+}
+    
+
 struct FlagImage: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .clipShape(.capsule)
+            .clipShape(Capsule())
             .shadow(radius: 5)
     }
 }
+
 extension View {
-    func imageStyle() -> some View {
+    func flagStyle() -> some View {
         modifier(FlagImage())
     }
 }
@@ -54,7 +71,7 @@ struct ContentView: View {
                             .font(.subheadline.weight(.heavy))
                         
                         Text(countries[correctAnswer])
-                            .font(.largeTitle.weight(.semibold))
+                            .titleStyle()
                     }
         
                     ForEach(0..<3) { number in
@@ -62,7 +79,7 @@ struct ContentView: View {
                             flagTapped(number)
                         } label : {
                             Image(countries[number])
-                                .imageStyle()
+                                .flagStyle()
                         }
                     }
                 }
